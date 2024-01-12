@@ -32,6 +32,8 @@
 #include <Base/SourceModelBase.hpp>
 #include <Base/BRTManager.hpp>
 #include <third_party_libraries/nlohmann/json.hpp>
+#include <SourceModels/SourceSimpleModel.hpp>
+#include <SourceModels/SourceDirectivityModel.hpp>
 
 namespace BRTServices {
 	class CHRTF;
