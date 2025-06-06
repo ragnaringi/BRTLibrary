@@ -817,8 +817,11 @@ namespace BRTBase {
 		*/
 		void ProcessAll() {
 			if (setupModeActivated) return;
-			std::thread thread1 = std::thread(&BRTBase::CBRTManager::ProcessAllThread, this);
-			thread1.join();
+            
+            for (auto it = audioSources.begin(); it != audioSources.end(); it++) (*it)->SetDataReady();
+
+            for (auto it = listenerModels.begin(); it != listenerModels.end(); it++)
+                (*it)->ProcessModelWithoutInputsSamples();
 		}
 		/**
 		 * @brief Executes the received command. To do so, it distributes it to all the connected modules, which are responsible for executing the relevant actions.
@@ -844,16 +847,6 @@ namespace BRTBase {
 		/////////////////
 		// Methods
 		/////////////////
-		
-		/**
-		 * @brief Start processing on each of the sources.
-		*/
-		void ProcessAllThread() {
-			for (auto it = audioSources.begin(); it != audioSources.end(); it++) (*it)->SetDataReady();
-
-			for (auto it = listenerModels.begin(); it != listenerModels.end(); it++)
-				(*it)->ProcessModelWithoutInputsSamples();
-		}
 
 		/**
 		 * @brief Find model in a shared_ptr list
